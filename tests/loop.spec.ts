@@ -61,9 +61,9 @@ test.describe('Asana Data-Driven Tests', () => {
         await page.goto('https://app.asana.com/-/login');
         await page.getByLabel('Email address').fill(email)
         await page.locator('.LoginEmailForm-continueButton').filter({hasText:'Continue'}).click()
-        await page.locator('#lui_6').fill(password);
+        await page.locator('.LoginPasswordForm-passwordInput').fill(password);
         await page.getByRole('button').filter({hasText:'Log in'}).click()
-        //await page.waitForNavigation();
+        await page.waitForNavigation();
       });
 
       //Step 2: Navigate to the project page
@@ -80,7 +80,7 @@ test.describe('Asana Data-Driven Tests', () => {
       await test.step('Verify the card is within the right column', async () => {
         const column = await page.locator(`text=${data.column}`).first();
         await expect(column).toBeVisible();
-        const card = await column.locator(`text=${data.card_title}`).first();
+        const card = await column.locator(`text=${data.card_title}`)
         await expect(card).toBeVisible();
       });
     });
